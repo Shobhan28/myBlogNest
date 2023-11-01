@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table (name = "posts_table")
+@Table (name = "posts_table" ,  uniqueConstraints = {@UniqueConstraint(columnNames ={"title"})})
 public class Post {
 
     // The unique identifier for each post
@@ -28,4 +28,6 @@ public class Post {
     @Column(name="content", nullable=false)
     private String content;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Comment> comments=new ArrayList<>();
 }
