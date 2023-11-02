@@ -14,8 +14,7 @@ import java.util.List;
 public class Post {
 
     // The unique identifier for each post
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     // The title of the blog post, which is required and mapped to the "title" column
