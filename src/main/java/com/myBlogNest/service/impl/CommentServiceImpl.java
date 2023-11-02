@@ -78,7 +78,6 @@ public class CommentServiceImpl implements CommentService {
             CommentDto commentDto = mapToDto(comment);
             commentDtos.add(commentDto);
         }
-
         return commentDtos;
     }
 
@@ -94,12 +93,10 @@ public class CommentServiceImpl implements CommentService {
 //        dto.setEmail(comment.getEmail());
 //        dto.setBody(comment.getBody());
         return commentDto;
-
     }
 
     public Comment mapToEntity(CommentDto commentDto){
         Comment comment=mapper.map(commentDto,Comment.class);
         return comment;
     }
-
 }
