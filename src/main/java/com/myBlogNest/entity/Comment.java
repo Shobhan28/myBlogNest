@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@Table(name = "comments_table")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
