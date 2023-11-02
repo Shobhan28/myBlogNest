@@ -4,6 +4,8 @@ package com.myBlogNest.payload;
 
 
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -14,13 +16,13 @@ public class PostDto {
     private long id;
 
     @NotEmpty
-    @Size(min=2, message = "post should have at least 2 characters")
+    @Size(min=5,max=30, message = "post should have at least 2 characters")
     private String title;
     @NotEmpty
-    @Size(min =10, message = "Post Description should have at list 10 character")
+    @Size(min =10,max = 100,message = "Post Description should have at list 10 character")
     private String description;
 
-    @NotEmpty
+    @NotBlank
     private String content;
 
 }
