@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
@@ -49,4 +51,12 @@ public class CommentController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+
+    // http://localhost:8080/api/comments
+    @GetMapping
+    public ResponseEntity<List<CommentDto>> getAllComments(){
+        List<CommentDto> listComment= commentService.getAllComment();
+
+        return new ResponseEntity<>(listComment,HttpStatus.OK);
+    }
 }
