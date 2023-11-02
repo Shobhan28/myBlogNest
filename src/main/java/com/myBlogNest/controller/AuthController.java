@@ -57,7 +57,8 @@ public class AuthController {
         user.setUsername((signDto.getUsername()));
         user.setPassword(passwordEncoder.encode(signDto.getPassword()));
 
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+//        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        Role roles = roleRepository.findByName("ROLE_USER").get();
 
         Set<Role> role = new HashSet<>();
         role.add(roles);
