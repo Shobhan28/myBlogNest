@@ -32,4 +32,13 @@ public class CommentController {
     }
 
 
+    // http://localhost:8080/api/comments/{commentId}
+    @DeleteMapping("{commentId}")
+    public ResponseEntity<String> deleteById(@PathVariable long commentId){
+
+        commentService.deleteByCommentId(commentId);
+
+        return new ResponseEntity<>("Comment is deleted",HttpStatus.OK);
+    }
+
 }
