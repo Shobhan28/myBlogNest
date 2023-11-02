@@ -1,15 +1,14 @@
 package com.myBlogNest.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.Set;
 import javax.persistence.*;
 
 
 @Entity
-@Data
+@Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @Table (name="user", uniqueConstraints = {
         @UniqueConstraint(columnNames={"username"}),
