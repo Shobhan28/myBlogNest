@@ -51,14 +51,16 @@ public class AuthController {
         // Now before creating a user, check whether the username or email already exists,
         // if they exist, return a response with an error message, otherwise, create a user
 
+        // add check for username exists in a DB
         if (userRepository.existsByUsername(signDto.getUsername())) {
             return new ResponseEntity<>("User Already Exist", HttpStatus.BAD_REQUEST);
-
         }
+        // add check for email exists in a DB
         if (userRepository.existsByEmail(signDto.getEmail())) {
             return new ResponseEntity<>("Email Already Exist", HttpStatus.BAD_REQUEST);
         }
 
+        // create user object
         User user = new User();
         user.setName(signDto.getName());
         user.setEmail(signDto.getEmail());
@@ -80,6 +82,8 @@ public class AuthController {
         signupDto1.setUsername(saveUser.getUsername());
 
         return new ResponseEntity<>(signupDto1, HttpStatus.CREATED);
+        // If you want to return a success message instead
+       // return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 
     @PostMapping("/signin")
