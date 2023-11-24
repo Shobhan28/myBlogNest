@@ -86,6 +86,7 @@ public class AuthController {
        // return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 
+    //  http://localhost:8080/api/auth/signin
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto
     loginDto){
