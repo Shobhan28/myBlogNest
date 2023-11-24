@@ -3,10 +3,12 @@ package com.myBlogNest.controller;
 
 import com.myBlogNest.entity.Role;
 import com.myBlogNest.entity.User;
+import com.myBlogNest.payload.JWTAuthResponse;
 import com.myBlogNest.payload.LoginDto;
 import com.myBlogNest.payload.SignUpDto;
 import com.myBlogNest.repository.RoleRepository;
 import com.myBlogNest.repository.UserRepository;
+import com.myBlogNest.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +38,8 @@ public class AuthController {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
 
     //   http://localhost:8080/api/auth/signup
@@ -79,15 +83,20 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto
+    public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto
     loginDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(),
                         loginDto.getPassword())
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed-in successfully!.",
-                HttpStatus.OK);
+
+        //get token from TokenProvider class
+        String getToken = tokenProvider.generateToken(authentication);
+
+        // returning back that token to postman
+        return ResponseEntity.ok(new JWTAuthResponse(getToken));
     }
 }
 
