@@ -3,6 +3,7 @@ package com.myBlogNest.controller;
 
 import com.myBlogNest.entity.Role;
 import com.myBlogNest.entity.User;
+import com.myBlogNest.payload.LoginDto;
 import com.myBlogNest.payload.SignUpDto;
 import com.myBlogNest.repository.RoleRepository;
 import com.myBlogNest.repository.UserRepository;
@@ -10,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +31,11 @@ public class AuthController {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
 
     //   http://localhost:8080/api/auth/signup
@@ -72,7 +76,18 @@ public class AuthController {
         signupDto1.setUsername(saveUser.getUsername());
 
         return new ResponseEntity<>(signupDto1, HttpStatus.CREATED);
+    }
 
-
+    @PostMapping("/signin")
+    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto
+    loginDto){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(),
+                        loginDto.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return new ResponseEntity<>("User signed-in successfully!.",
+                HttpStatus.OK);
     }
 }
+
